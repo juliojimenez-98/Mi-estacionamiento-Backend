@@ -5,15 +5,15 @@ const Usuario = require("../models/usuario");
 const { generarJWT } = require("../helpers/generar-jwt");
 
 const login = async (req, res = response) => {
-  const { username, password } = req.body;
+  const { correo, password } = req.body;
 
   try {
     //Verificar si email existe
-    const usuario = await Usuario.findOne({ username });
+    const usuario = await Usuario.findOne({ correo });
 
     if (!usuario) {
       return res.status(400).json({
-        msg: "Usuario / password no son correctos - username ",
+        msg: "Usuario / password no son correctos - correo ",
       });
     }
 
