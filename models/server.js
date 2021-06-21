@@ -10,6 +10,7 @@ class Server {
     this.path = {
       auth: "/api/auth",
       usuarios: "/api/usuarios",
+      estacionamientos: "/api/estacionamientos",
     };
 
     //Conectar a bbdd
@@ -40,6 +41,10 @@ class Server {
   routes() {
     this.app.use(this.path.auth, require("../routes/auth"));
     this.app.use(this.path.usuarios, require("../routes/usuarios"));
+    this.app.use(
+      this.path.estacionamientos,
+      require("../routes/estacionamientos")
+    );
   }
 
   listen() {
