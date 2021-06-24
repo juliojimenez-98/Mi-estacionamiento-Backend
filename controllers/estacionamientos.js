@@ -27,7 +27,7 @@ const crearEstacionamiento = async (req = request, res = response) => {
 
   await estacionamiento.save();
 
-  res.status(401).json({
+  res.status(201).json({
     msg: "Estacionamiento creado con exito",
     estacionamiento,
   });
