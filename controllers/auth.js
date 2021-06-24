@@ -41,15 +41,28 @@ const login = async (req, res = response) => {
     res.json({
       usuario,
       token,
+      ok: true,
     });
   } catch (error) {
     return res.json({
       msg: "Algo salio mal",
+      ok: false,
       error,
     });
   }
 };
 
+const revalidarToken = async (req, res = response) => {
+  const { uid } = req;
+  const token = await generarJWT(uid);
+
+  return res.json({
+    ok: true,
+    uid,
+    token,
+  });
+};
 module.exports = {
   login,
+  revalidarToken,
 };
