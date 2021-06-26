@@ -3,10 +3,11 @@ const { Estacionamiento } = require("../models");
 
 const estacionamientosGet = async (req = request, res = response) => {
   const { limite, desde } = req.query;
+  const query = { estado: true };
 
   const [total, estacionamientos] = await Promise.all([
-    Estacionamiento.countDocuments(),
-    Estacionamiento.find().limit(Number(limite)).skip(Number(desde)),
+    Estacionamiento.countDocuments(query),
+    Estacionamiento.find(query).limit(Number(limite)).skip(Number(desde)),
   ]);
 
   res.json({ estacionamientos, total });
