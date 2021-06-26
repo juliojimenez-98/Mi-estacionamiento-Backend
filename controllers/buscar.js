@@ -2,7 +2,12 @@ const { response } = require("express");
 const { ObjectId } = require("mongoose").Types;
 const { Usuario, Estacionamiento } = require("../models");
 
-const coleccionesExistentes = ["estacionamientos", "role", "usuarios"];
+const coleccionesExistentes = [
+  "estacionamientos",
+  "mis-estacionamientos",
+  "role",
+  "usuarios",
+];
 
 const buscarUsuarios = async (termino = "", res = response) => {
   const isMongoID = ObjectId.isValid(termino);
@@ -46,6 +51,19 @@ const buscarEstacionamientos = async (termino = "", res = response) => {
   });
 };
 
+const buscarMisEstacionamientos = async (termino = "", res = response) => {
+  const isMongoIDUser = ObjectId.isValid(termino);
+
+  if (isMongoIDUser) {
+    const estacionamiento = await Estacionamiento.find({
+      usuario: ObjectId(termino),
+    });
+    return res.json({
+      results: estacionamiento ? [estacionamiento] : [],
+    });
+  }
+};
+
 const buscar = (req, res = response) => {
   const { coleccion, termino } = req.params;
   if (!coleccionesExistentes.includes(coleccion)) {
@@ -53,12 +71,17 @@ const buscar = (req, res = response) => {
       msg: `Las colecciones permitidas son: ${coleccionesExistentes}`,
     });
   }
+
   switch (coleccion) {
     case "usuarios":
       buscarUsuarios(termino, res);
       break;
     case "estacionamientos":
       buscarEstacionamientos(termino, res);
+      break;
+
+    case "mis-estacionamientos":
+      buscarMisEstacionamientos(termino, res);
       break;
 
     default:
