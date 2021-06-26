@@ -9,10 +9,7 @@ const estacionamientosGet = async (req = request, res = response) => {
     Estacionamiento.find().limit(Number(limite)).skip(Number(desde)),
   ]);
 
-  res.json({
-    total,
-    estacionamientos,
-  });
+  res.json({ estacionamientos, total });
 };
 
 const crearEstacionamiento = async (req = request, res = response) => {

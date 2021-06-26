@@ -29,6 +29,10 @@ const EstacionamientoSchema = Schema({
     type: Boolean,
     default: false,
   },
+  precio_arriendo: {
+    type: Number,
+    default: 0,
+  },
   usuario: {
     type: Schema.Types.ObjectId,
     ref: "Usuario",
