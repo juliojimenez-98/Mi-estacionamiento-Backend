@@ -55,9 +55,22 @@ const actualizarEstacionamiento = async (req, res = response) => {
   res.json(estacionamiento);
 };
 
+const falseEstacionamiento = async (req, res = response) => {
+  const { id } = req.params;
+
+  const estacionamientoFalse = await Estacionamiento.findByIdAndUpdate(
+    id,
+    { estado: false },
+    { new: true }
+  );
+
+  res.json(estacionamientoFalse);
+};
+
 module.exports = {
   estacionamientosGet,
   crearEstacionamiento,
   getEstacionamientoById,
   actualizarEstacionamiento,
+  falseEstacionamiento,
 };

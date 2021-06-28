@@ -5,6 +5,7 @@ const {
   estacionamientosGet,
   getEstacionamientoById,
   actualizarEstacionamiento,
+  falseEstacionamiento,
 } = require("../controllers/estacionamientos");
 const { existeEstacionamientoPorId } = require("../helpers/db-validators");
 
@@ -57,6 +58,17 @@ router.put(
     validarCampos,
   ],
   actualizarEstacionamiento
+);
+
+router.delete(
+  "/:id",
+  [
+    validarJWT,
+    check("id", "el id no es valido").isMongoId(),
+    check("id").custom(existeEstacionamientoPorId),
+    validarCampos,
+  ],
+  falseEstacionamiento
 );
 
 module.exports = router;
