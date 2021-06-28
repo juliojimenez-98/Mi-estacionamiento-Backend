@@ -1,3 +1,4 @@
+const { Estacionamiento } = require("../models");
 const Role = require("../models/role");
 const usuario = require("../models/usuario");
 
@@ -22,8 +23,16 @@ const existsUserById = async (id) => {
   }
 };
 
+const existeEstacionamientoPorId = async (id) => {
+  const existeEstacionamiento = await Estacionamiento.findById(id);
+  if (!existeEstacionamiento) {
+    throw new Error(`El estacionamiento con id: ${id}, No existe `);
+  }
+};
+
 module.exports = {
   isRoleValid,
   emailExists,
   existsUserById,
+  existeEstacionamientoPorId,
 };

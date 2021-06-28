@@ -31,7 +31,33 @@ const crearEstacionamiento = async (req = request, res = response) => {
   });
 };
 
+const getEstacionamientoById = async (req, res = response) => {
+  const { id } = req.params;
+  const estacionamiento = await Estacionamiento.findById(id).populate(
+    "usuario",
+    "nombre"
+  );
+
+  res.json(estacionamiento);
+};
+
+const actualizarEstacionamiento = async (req, res = response) => {
+  const { id } = req.params;
+
+  const { estado, usuario, ...data } = req.body;
+
+  data.usuario = req.usuario._id;
+
+  const estacionamiento = await Estacionamiento.findByIdAndUpdate(id, data, {
+    new: true,
+  });
+
+  res.json(estacionamiento);
+};
+
 module.exports = {
   estacionamientosGet,
   crearEstacionamiento,
+  getEstacionamientoById,
+  actualizarEstacionamiento,
 };
