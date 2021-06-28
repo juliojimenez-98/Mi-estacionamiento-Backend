@@ -59,7 +59,7 @@ const buscarMisEstacionamientos = async (termino = "", res = response) => {
       usuario: ObjectId(termino),
     });
     return res.json({
-      results: estacionamiento ? [estacionamiento] : [],
+      results: estacionamiento ? estacionamiento : [],
     });
   }
 };
